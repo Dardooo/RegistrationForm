@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Drone Warfare Summit 2025 Registration</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Optional: Basic styles for better layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .form-section {
+      display: none;
+    }
+    .form-section.active {
+      display: block;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
@@ -17,7 +33,7 @@
     <label><input type="radio" name="termsAgree" value="Yes" /> Yes</label>
     <label><input type="radio" name="termsAgree" value="No" /> No</label>
     <label><input type="radio" name="termsAgree" value="Other" /> Other</label><br/><br/>
-    <button onclick="nextSection(1)">Next</button>
+    <button onclick="nextSection(1); return false;">Next</button>
   </section>
 
   <!-- Section 2 -->
@@ -28,97 +44,47 @@
     <label><input type="radio" name="consentAgree" value="Yes" /> Yes</label>
     <label><input type="radio" name="consentAgree" value="No" /> No</label>
     <label><input type="radio" name="consentAgree" value="Other" /> Other</label><br/><br/>
-    <button onclick="prevSection(2)">Back</button>
-    <button onclick="nextSection(2)">Next</button>
+    <button onclick="prevSection(2); return false;">Back</button>
+    <button onclick="nextSection(2); return false;">Next</button>
   </section>
 
   <!-- Section 3 -->
   <section class="form-section" id="section3">
     <h1>REGISTRATION FORM</h1>
-    <form id="registrationForm">
+    <!-- The form submits to your n8n webhook URL -->
+    <form id="registrationForm" action="https://dylangabriel.app.n8n.cloud/webhook-test/fb1a783a-a4c9-472e-a311-a144e08da3fb" method="POST">
       <label>Name:<br/><input type="text" name="name" required /></label><br/>
       <label>Email:<br/><input type="email" name="email" required /></label><br/>
       <label>Phone Number:<br/><input type="tel" name="phone" required /></label><br/>
       <label>Organization/Company:<br/><input type="text" name="organization" required /></label><br/>
       <label>Designation:<br/><input type="text" name="designation" required /></label><br/>
       <label>Position:<br/><input type="text" name="position" required /></label><br/>
-      <label>Address:<br/><textarea name="address" required></textarea></label><br/><br/>
+      <label>Address:<br/><textarea name="address" required></textarea></label><br/>
+      <!-- Submit button to send the form -->
       <button type="submit">Submit Registration</button>
     </form>
+    <button onclick="prevSection(3); return false;">Back</button>
   </section>
 
-  <!-- JavaScript for section navigation and validation -->
   <script>
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.form-section');
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById('section' + sectionId).classList.add('active');
+    }
+
     function nextSection(current) {
-      if (current === 1) {
-        // Validate terms agreement
-        const termsRadios = document.querySelectorAll('input[name="termsAgree"]');
-        if (![...termsRadios].some(r => r.checked)) {
-          alert('Please select an answer to proceed.');
-          return; // Do not proceed
-        }
-      }
-
-      if (current === 2) {
-        // Validate consent agreement
-        const consentRadios = document.querySelectorAll('input[name="consentAgree"]');
-        if (![...consentRadios].some(r => r.checked)) {
-          alert('Please select an answer to proceed.');
-          return; // Do not proceed
-        }
-      }
-
-      // Proceed to next section
-      document.querySelectorAll('.form-section').forEach((section, index) => {
-        section.classList.remove('active');
-        if (index === current) {
-          section.classList.add('active');
-        }
-      });
+      showSection(current + 1);
     }
 
     function prevSection(current) {
-      document.querySelectorAll('.form-section').forEach((section, index) => {
-        section.classList.remove('active');
-        if (index === current - 2) {
-          section.classList.add('active');
-        }
-      });
+      showSection(current - 1);
     }
-  </script>
 
-  <!-- JavaScript for form submission -->
-  <script>
+    // Optional: prevent form submission if needed
     document.getElementById('registrationForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
-
-      // Collect form data
-      const formData = new FormData(this);
-      const data = {};
-      formData.forEach((value, key) => {
-        data[key] = value;
-      });
-
-      // Send data to your webhook
-      fetch('https://dylangabriel.app.n8n.cloud/webhook-st/fb1a783a-a4c9-472e-a311-a144e08da3fb', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(result => {
-        alert('Registration submitted successfully!');
-        console.log('Success:', result);
-        // Optionally, reset form or redirect
-        // this.reset();
-        // window.location.href = 'thankyou.html';
-      })
-      .catch(error => {
-        alert('Error submitting registration.');
-        console.error('Error:', error);
-      });
+      // You can add validation or confirmation here if desired
+      alert('Submitting your registration...');
     });
   </script>
 </body>
