@@ -9,6 +9,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+      background-color: #f5f5f5;
     }
     .form-section {
       display: none;
@@ -17,6 +18,22 @@
       display: block;
     }
     button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0 10px 0;
+      box-sizing: border-box;
+    }
+    h1 {
+      color: #333;
+    }
+    label {
+      display: block;
       margin-top: 10px;
     }
   </style>
@@ -51,61 +68,33 @@
   <section class="form-section" id="section3">
     <h1>REGISTRATION FORM</h1>
     <!-- The form submits to your n8n webhook URL -->
-    <form id="registrationForm" action="https://dylangabriel.app.n8n.cloud/webhook/2b7cba60-d0aa-4364-bc7c-1f9301c27e1d" method="POST">
-      <label>Name:<br/><input type="text" name="name" required /></label><br/>
-      <label>Email:<br/><input type="email" name="email" required /></label><br/>
-      <label>Phone Number:<br/><input type="tel" name="phone" required /></label><br/>
-      <label>Organization/Company:<br/><input type="text" name="organization" required /></label><br/>
-      <label>Designation:<br/><input type="text" name="designation" required /></label><br/>
-      <label>Position:<br/><input type="text" name="position" required /></label><br/>
-      <label>Address:<br/><textarea name="address" required></textarea></label><br/><br/>
+    <form id="registrationForm" action="https://dylangabriel.app.n8n.cloud/webhook-test/2b7cba60-d0aa-4364-bc7c-1f9301c27e1d" method="POST">
+      <label>Name:<br/><input type="text" name="name" required /></label>
+      <label>Email:<br/><input type="email" name="email" required /></label>
+      <label>Phone Number:<br/><input type="tel" name="phone" required /></label>
+      <label>Organization/Company:<br/><input type="text" name="organization" required /></label>
+      <label>Designation:<br/><input type="text" name="designation" required /></label>
+      <label>Position:<br/><input type="text" name="position" required /></label>
+      <label>Address:<br/><textarea name="address" required></textarea></label>
+      <label>Additional Comments:<br/><textarea name="comments" rows="4" cols="50"></textarea></label><br/>
       <button type="submit">Submit Registration</button>
     </form>
   </section>
 
-  <!-- Optional: Confirmation message -->
-  <section class="form-section" id="confirmation" style="text-align:center;">
-    <h2>Thank you for registering!</h2>
-    <p>We have received your registration. We will contact you shortly.</p>
-  </section>
-
   <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById('section' + sectionId).classList.add('active');
+    }
+
     function nextSection(current) {
-      document.querySelector('#section' + current).classList.remove('active');
-      document.querySelector('#section' + (current + 1)).classList.add('active');
+      showSection(current + 1);
     }
 
     function prevSection(current) {
-      document.querySelector('#section' + current).classList.remove('active');
-      document.querySelector('#section' + (current - 1)).classList.add('active');
+      showSection(current - 1);
     }
-
-    // Handle form submission via AJAX
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent default form submit
-      const form = event.target;
-      const data = new URLSearchParams(new FormData(form));
-
-      fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      .then(response => {
-        if (response.ok) {
-          // Hide registration form and show confirmation
-          document.querySelector('#section3').classList.remove('active');
-          document.getElementById('confirmation').classList.add('active');
-        } else {
-          alert('There was an error submitting your registration. Please try again.');
-        }
-      })
-      .catch(error => {
-        alert('Network error. Please try again later.');
-      });
-    });
   </script>
+
 </body>
 </html>
