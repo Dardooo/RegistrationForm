@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drone Warfare Summit 2025 Registration</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Section 1 -->
+  <section class="form-section active" id="section1">
+    <h1>DRONE WARFARE SUMMIT 2025 REGISTRATION</h1>
+    <p>The Drone Warfare Summit 2025 aims to gather experts, policymakers, and enthusiasts to discuss the current state and future advancements in drone technology for defense and security applications worldwide.</p>
+    <p><strong>Data Privacy Notice:</strong> Your data will be collected and processed in accordance with the Data Privacy Act of 2012 (RA 10173) and other applicable privacy laws. By registering, you agree to the use of your data for summit-related communications and documentation purposes.</p>
+    <p>Do you agree to the terms?</p>
+    <label><input type="radio" name="termsAgree" value="Yes" /> Yes</label>
+    <label><input type="radio" name="termsAgree" value="No" /> No</label>
+    <label><input type="radio" name="termsAgree" value="Other" /> Other</label><br/><br/>
+    <button onclick="nextSection(1)">Next</button>
+  </section>
+
+  <!-- Section 2 -->
+  <section class="form-section" id="section2">
+    <h1>CONSENT FORM</h1>
+    <p>We require your consent to collect and process your personal information for registration, event management, and communication purposes related to the Drone Warfare Summit 2025.</p>
+    <p>Do you agree?</p>
+    <label><input type="radio" name="consentAgree" value="Yes" /> Yes</label>
+    <label><input type="radio" name="consentAgree" value="No" /> No</label>
+    <label><input type="radio" name="consentAgree" value="Other" /> Other</label><br/><br/>
+    <button onclick="prevSection(2)">Back</button>
+    <button onclick="nextSection(2)">Next</button>
+  </section>
+
+  <!-- Section 3 -->
+  <section class="form-section" id="section3">
+    <h1>REGISTRATION FORM</h1>
+    <form id="registrationForm">
+      <label>Name:<br/><input type="text" name="name" required /></label><br/>
+      <label>Email:<br/><input type="email" name="email" required /></label><br/>
+      <label>Phone Number:<br/><input type="tel" name="phone" required /></label><br/>
+      <label>Organization/Company:<br/><input type="text" name="organization" required /></label><br/>
+      <label>Designation:<br/><input type="text" name="designation" required /></label><br/>
+      <label>Position:<br/><input type="text" name="position" required /></label><br/>
+      <label>Address:<br/><textarea name="address" required></textarea></label><br/>
+      <p>Select your registration type:</p>
+      <label><input type="radio" name="registrationType" value="Attendee" required /> Attendee</label>
+      <label><input type="radio" name="registrationType" value="Speaker" /> Speaker</label>
+      <label><input type="radio" name="registrationType" value="Exhibitor" /> Exhibitor</label>
+      <label><input type="radio" name="registrationType" value="VIP" onchange="toggleVIPCode(this)" /> VIP</label>
+      <div id="vipCodeContainer" style="display:none;">
+        <label>VIP Code (optional):<br/><input type="text" name="vipCode" /></label>
+      </div><br/>
+      <button type="button" onclick="prevSection(3)">Back</button>
+      <button type="button" onclick="nextSection(3)">Next</button>
+    </form>
+  </section>
+
+  <!-- Section 4 -->
+  <section class="form-section" id="section4">
+    <h1>Thank you for registering!</h1>
+    <p>Your registration for the Drone Warfare Summit 2025 has been successfully received. You will receive a confirmation email or QR code for event access shortly.</p>
+  </section>
+
+  <script>
+    function nextSection(current) {
+      // Special validation for Section 1 (Data Privacy)
+      if(current === 1){
+        const agree = document.querySelector('input[name="termsAgree"]:checked');
+        if(!agree){
+          alert("Please select an option before proceeding.");
+          return;
+        }
+        if(agree.value === "No"){
+          alert("You must agree to the Data Privacy terms to proceed.");
+          return; // Stay on section 1
+        }
+      }
+
+      // Special validation for Section 2 (Consent)
+      if(current === 2){
+        const consent = document.querySelector('input[name="consentAgree"]:checked');
+        if(!consent){
+          alert("Please select an option before proceeding.");
+          return;
+        }
+        if(consent.value === "No"){
+          alert("Consent is required. Returning to Data Privacy section.");
+          showSection(1);
+          return;
+        }
+      }
+
+      showSection(current + 1);
+    }
+
+    function prevSection(current) {
+      showSection(current - 1);
+    }
+
+    function showSection(sectionNumber) {
+      // Hide all sections
+      document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
+      // Show desired section
+      document.getElementById('section' + sectionNumber).classList.add('active');
+    }
+
+    function toggleVIPCode(radio) {
+      const vipContainer = document.getElementById('vipCodeContainer');
+      if(radio.checked && radio.value === 'VIP'){
+        vipContainer.style.display = 'block';
+      } else {
+        vipContainer.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>
+
