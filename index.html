@@ -37,6 +37,39 @@
       margin-top: 10px;
     }
   </style>
+  <script>
+    // Function to generate a UUID
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    // Attach event listener to form submission
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('registrationForm');
+      form.addEventListener('submit', function() {
+        // Generate UUID and set it to hidden input
+        document.getElementById('registration_id').value = generateUUID();
+      });
+    });
+
+    // Navigation functions
+    function nextSection(current) {
+      document.querySelectorAll('.form-section').forEach(function(section) {
+        section.classList.remove('active');
+      });
+      document.getElementById('section' + (current + 1)).classList.add('active');
+    }
+
+    function prevSection(current) {
+      document.querySelectorAll('.form-section').forEach(function(section) {
+        section.classList.remove('active');
+      });
+      document.getElementById('section' + (current - 1)).classList.add('active');
+    }
+  </script>
 </head>
 <body>
 
@@ -69,6 +102,7 @@
     <h1>REGISTRATION FORM</h1>
     <!-- The form submits to your n8n webhook URL -->
     <form id="registrationForm" action="https://dylangabriel.app.n8n.cloud/webhook/2b7cba60-d0aa-4364-bc7c-1f9301c27e1d" method="POST">
+      <input type="hidden" id="registration_id" name="registration_id" value="">
       <label>Name:<br/><input type="text" name="name" required /></label>
       <label>Email:<br/><input type="email" name="email" required /></label>
       <label>Phone Number:<br/><input type="tel" name="phone" required /></label>
@@ -76,25 +110,9 @@
       <label>Designation:<br/><input type="text" name="designation" required /></label>
       <label>Position:<br/><input type="text" name="position" required /></label>
       <label>Address:<br/><textarea name="address" required></textarea></label>
-      <label>Additional Comments:<br/><textarea name="comments" rows="4" cols="50"></textarea></label><br/>
-      <button type="submit">Submit Registration</button>
+      <button type="submit">Register</button>
     </form>
   </section>
-
-  <script>
-    function showSection(sectionId) {
-      document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById('section' + sectionId).classList.add('active');
-    }
-
-    function nextSection(current) {
-      showSection(current + 1);
-    }
-
-    function prevSection(current) {
-      showSection(current - 1);
-    }
-  </script>
 
 </body>
 </html>
