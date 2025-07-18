@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Drone Warfare Summit 2025 Registration</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    /* Optional: Basic styles for better layout */
+    /* Basic styles for layout */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -52,39 +51,60 @@
   <section class="form-section" id="section3">
     <h1>REGISTRATION FORM</h1>
     <!-- The form submits to your n8n webhook URL -->
-    <form id="registrationForm" action="https://dylangabriel.app.n8n.cloud/webhook-test/fb1a783a-a4c9-472e-a311-a144e08da3fb" method="POST">
+    <form id="registrationForm" action="https://dylangabriel.app.n8n.cloud/webhook/2b7cba60-d0aa-4364-bc7c-1f9301c27e1d" method="POST">
       <label>Name:<br/><input type="text" name="name" required /></label><br/>
       <label>Email:<br/><input type="email" name="email" required /></label><br/>
       <label>Phone Number:<br/><input type="tel" name="phone" required /></label><br/>
       <label>Organization/Company:<br/><input type="text" name="organization" required /></label><br/>
       <label>Designation:<br/><input type="text" name="designation" required /></label><br/>
       <label>Position:<br/><input type="text" name="position" required /></label><br/>
-      <label>Address:<br/><textarea name="address" required></textarea></label><br/>
-      <!-- Submit button to send the form -->
+      <label>Address:<br/><textarea name="address" required></textarea></label><br/><br/>
       <button type="submit">Submit Registration</button>
     </form>
-    <button onclick="prevSection(3); return false;">Back</button>
+  </section>
+
+  <!-- Optional: Confirmation message -->
+  <section class="form-section" id="confirmation" style="text-align:center;">
+    <h2>Thank you for registering!</h2>
+    <p>We have received your registration. We will contact you shortly.</p>
   </section>
 
   <script>
-    function showSection(sectionId) {
-      const sections = document.querySelectorAll('.form-section');
-      sections.forEach(sec => sec.classList.remove('active'));
-      document.getElementById('section' + sectionId).classList.add('active');
-    }
-
     function nextSection(current) {
-      showSection(current + 1);
+      document.querySelector('#section' + current).classList.remove('active');
+      document.querySelector('#section' + (current + 1)).classList.add('active');
     }
 
     function prevSection(current) {
-      showSection(current - 1);
+      document.querySelector('#section' + current).classList.remove('active');
+      document.querySelector('#section' + (current - 1)).classList.add('active');
     }
 
-    // Optional: prevent form submission if needed
-    document.getElementById('registrationForm').addEventListener('submit', function(e) {
-      // You can add validation or confirmation here if desired
-      alert('Submitting your registration...');
+    // Handle form submission via AJAX
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submit
+      const form = event.target;
+      const data = new URLSearchParams(new FormData(form));
+
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          // Hide registration form and show confirmation
+          document.querySelector('#section3').classList.remove('active');
+          document.getElementById('confirmation').classList.add('active');
+        } else {
+          alert('There was an error submitting your registration. Please try again.');
+        }
+      })
+      .catch(error => {
+        alert('Network error. Please try again later.');
+      });
     });
   </script>
 </body>
