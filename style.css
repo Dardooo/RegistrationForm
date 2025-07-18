@@ -1,0 +1,181 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f4f6f8, #e0ecf8, #f4f6f8);
+}
+
+h1 {
+  color: #003366;
+  border-bottom: 3px solid #ff6b6b;
+  padding-bottom: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  display: none;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-top: 12px solid #003366;
+  max-width: 650px;
+  margin: 40px auto;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.form-section.active {
+  display: block;
+}
+
+label {
+  display: block;
+  margin: 15px 0 5px 0;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  border: 1px solid #003366;
+  outline: none;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+}
+
+.radio-group label {
+  display: inline-block;
+  margin-right: 20px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+button {
+  background: #ffcc00;
+  color: #003366;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: #ffd633;
+  transform: translateY(-2px);
+}
+
+p {
+  color: #444;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+#vipCodeContainer {
+  margin-top: 10px;
+}
+
+body::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #0038a8 25%, #ffffff 25%, #ffffff 50%, #ce1126 50%, #ce1126 75%, #ffcc00 75%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+body::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #0038a8 25%, #ffffff 25%, #ffffff 50%, #ce1126 50%, #ce1126 75%, #ffcc00 75%);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* Divider lines between sections for form clarity */
+hr {
+  border: 0;
+  height: 1px;
+  background: #eee;
+  margin: 20px 0;
+}
+
+/* Adding icons for input fields using pseudo-elements (optional aesthetic) */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  padding-left: 40px;
+}
+
+input[name="name"] {
+  background-image: url('https://img.icons8.com/ios-filled/20/000000/user.png');
+}
+
+input[name="email"] {
+  background-image: url('https://img.icons8.com/ios-filled/20/000000/new-post.png');
+}
+
+input[name="phone"] {
+  background-image: url('https://img.icons8.com/ios-filled/20/000000/phone.png');
+}
+
+input[name="organization"] {
+  background-image: url('https://img.icons8.com/ios-filled/20/000000/company.png');
+}
+
+input[name="designation"] {
+  background-image: url('https://img.icons8.com/ios-filled/20/000000/briefcase.png');
+}
+
+textarea[name="address"] {
+  background-image: url('https://img.icons8.com/ios-filled/20/000000/address.png');
+  background-position: 10px 10px;
+  padding-top: 12px;
+}
+
